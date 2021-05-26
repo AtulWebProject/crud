@@ -44,7 +44,7 @@ Route::post('view/data','TodoController@viewdata')->name('todo_view');
 Route::get('rowData','TodoController@rowfilter')->name('getRowData');
 Route::get('deletedrowData','TodoController@deletedrowfilter')->name('deletedrowData');
 Route::get('fetch_addeddata', 'TodoController@index')->name('alldata')->middleware('authenticated');
-Route::get('fetch_userdata', 'HomeController@usersData')->name('userdata');
+Route::get('fetch_userdata', 'HomeController@usersData')->middleware(['authenticated','can:isAdmin'])->name('userdata');
 
 
 

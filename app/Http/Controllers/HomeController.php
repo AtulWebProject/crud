@@ -54,16 +54,16 @@ class HomeController extends Controller
 
     public function usersData()
     {
-        $userType=Auth::user()->user_type;
-        if ($userType == 1) {
+        // $userType=Auth::user()->user_type;
+        // if ($userType == 1) {
             $viewdata=User::paginate(7);
           // return view('todo',compact('viewdata'));
         return view('userdata',compact('viewdata'));
-        }
-        else
-        {
-            return back();
-        }
+        // }
+        // else
+        // {
+        //     return back();
+        // }
         
     }
 

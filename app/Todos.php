@@ -2,6 +2,7 @@
 
 namespace App;
 use App\Exports;
+use Gate;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Kyslik\ColumnSortable\Sortable;
@@ -39,6 +40,7 @@ class Todos extends Model
     $post=todos::where($searchdata)->where('user_id',$userid)->paginate(10);
     }
     return $post;
+
   }
 
   public static function ActiveUserData($res){

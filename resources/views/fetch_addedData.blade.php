@@ -138,7 +138,10 @@
            <?php } ?></td>
            <!-- <td>{{$todo->created_at}}</td>
            <td>{{$todo->updated_at}}</td> -->
-           <td><!-- <a href="#" class="delete">Delete</a> --><i class="fas fa-trash-alt delete" data-toggle="modal" data-target="#delete_specialities_details"></i>
+           <td>
+            @can("allowUser",$todo)
+            <!-- <a href="#" class="delete">Delete</a> --><i class="fas fa-trash-alt delete" data-toggle="modal" data-target="#delete_specialities_details"></i>
+            @endcan
             <a href="{{route('todo_edit',[ base64_encode($todo->id ?? '') ])}}"><i class="fas fa-pen"></i></a>
             <!-- <a href="{{route('todo_view',[$todo->id])}}"> --><i class="far fa-eye viewdata" data-toggle="modal" data-target="#view_specialities_details"></i><!-- </a> -->
             </form>

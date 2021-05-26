@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\todo;
 use App\Todos;
+use App\User;
 use Auth;
 use Redirect;
+use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -22,6 +24,7 @@ class TodoController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        //$this->authorizeResource(Post::class, 'user');
     }
 
     public function index(Request $request)
@@ -29,6 +32,7 @@ class TodoController extends Controller
          
         // $viewdata=todos::sortable()->paginate(10);
         // return view('fetch_addedData',compact('viewdata'))->with('no', 1);
+        //$this->authorize('view', User::class);
         $number=$request->get('number');
         $name=$request->get('search');
         $email=$request->get('email');
@@ -63,7 +67,10 @@ class TodoController extends Controller
             $userid=Auth::user()->id;
             $userType=Auth::user()->user_type;
             $userData = Todos::SearchUserData($searchdata,$userid,$userType);
-        return view('fetch_addeddata',['viewdata'=>$userData,'search'=>$name,'number'=>$number,'email'=>$email,'role'=>$role,'created_at'=>$created_at,'updated_at'=>$updated_at])->with('no', 1);
+               return view('fetch_addeddata',['viewdata'=>$userData,'search'=>$name,'number'=>$number,'email'=>$email,'role'=>$role,'created_at'=>$created_at,'updated_at'=>$updated_at])->with('no', 1);
+            
+            
+        
 
     }
 
@@ -166,9 +173,9 @@ class TodoController extends Controller
     public function edit(todo $todo,$id)
     {
         $userid=Auth::user()->id;
-        $user_id = base64_decode($id);
+        $Data_id = base64_decode($id);
         $userType=Auth::user()->user_type;
-        $todoArr=Todo::where('user_id',$userid)->find($user_id);
+        $todoArr=Todo::where('user_id',$userid)->find($Data_id);
         if ($todoArr) {
            return view('editData')->with('todoArr',$todoArr);
         }
