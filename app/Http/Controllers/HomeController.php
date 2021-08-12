@@ -33,6 +33,8 @@ class HomeController extends Controller
      */
     public function index(todo $todo)
     {
+        // $post=todos::has('user')->get()->count();
+        // dd($post);
         $userid=Auth::user()->id;
         $userType=Auth::user()->user_type;
         if ($userType==1) {
@@ -54,16 +56,16 @@ class HomeController extends Controller
 
     public function usersData()
     {
-        // $userType=Auth::user()->user_type;
-        // if ($userType == 1) {
-            $viewdata=User::paginate(7);
-          // return view('todo',compact('viewdata'));
+        //$count=todos::find($id)->UserData()->count();
+        // $post  = Jumpsite::find($jid);
+        // dd($count);
+
+        $viewdata=User::paginate(7);
+         foreach($viewdata as $i=>$d){
+           $viewdata[$i]['count'] = todos::where('user_id',$d->id)->count();
+       }
+        //$userData = User::UserData();
         return view('userdata',compact('viewdata'));
-        // }
-        // else
-        // {
-        //     return back();
-        // }
         
     }
 
@@ -123,9 +125,9 @@ class HomeController extends Controller
         
     }
     public function profile_Pic(Request $request){
-        $viewdata=Auth::user();
-        $id=$viewdata->id;
-        $res=user::find($id);
+        // $viewdata=Auth::user();
+        // $id=$viewdata->id;
+        // $res=user::find($id);
         if ($request->hasfile('profile_image')) {
                $file = $request->file('profile_image');
                $extension = $file->getClientOriginalExtension();

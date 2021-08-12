@@ -11,7 +11,7 @@ class User extends Authenticatable
     use Notifiable;
   
     /**
-     * The attributes that are mass assignable.
+     * The attributes that are mass assignable. 
      *
      * @var array
      */
@@ -42,4 +42,11 @@ class User extends Authenticatable
     {
         return User::all();
     }
+    public function CountUserData()
+    {
+
+      return $this->belongsToMany('App\todos','todos','user_id'); 
+    }
+    
 }
+?>

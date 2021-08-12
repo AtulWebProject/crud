@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TodoController;
-use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Http;
+use App\Http\Controllers\IptcController;
+use App\Http\Controllers\GpsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,9 +18,19 @@ use App\Http\Controllers\HomeController;
 // Route::get('softDelete', function () {
 //     post::find(5)->delete();
 // });
+Route::get('/', 'GpsController@index');
+Route::get('test', function () {
+    return view('addmetadata');
+});
+Route::get('test1', function () {
+    return view('test1');
+});
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('getiptc', function () {
+    return view('iptcmeta');
+});
+Route::get('exif', function () {
+    return view('exif');
 });
 // Route::get('admin_panel', function () {
 //     return view('admin')->middleware('authenticated');
@@ -32,34 +43,35 @@ Route::get('/home', 'HomeController@index')->name('home');
 // Route::get('todo_show', 'TodoController@index')->middleware('authenticated');
 Route::post('todo_delete', 'TodoController@destroy');
 // Route::post('soft_delete', 'TodoController@softdelete');
-Route::get('todo_create', 'TodoController@create')->name('showData')->middleware('authenticated');
-Route::get('todo_edit_data/{id}', 'TodoController@edit')->name('todo_edit')->middleware('authenticated');
-Route::post('todo_submit', 'TodoController@store')->name('submit_data');
-Route::post('todo_update/{id}', 'TodoController@update')->name('todo.update');
+
+
+
+
 // Route::get('searchData','TodoController@search');
-Route::get('searchuserData','TodoController@index')->name('searchuserData');
-Route::get('dsearchuserData','TodoController@deletedsearch')->name('deletedsearchuserData');
-Route::get('searchData','TodoController@examsearch');
-Route::post('view/data','TodoController@viewdata')->name('todo_view');
-Route::get('rowData','TodoController@rowfilter')->name('getRowData');
-Route::get('deletedrowData','TodoController@deletedrowfilter')->name('deletedrowData');
-Route::get('fetch_addeddata', 'TodoController@index')->name('alldata')->middleware('authenticated');
-Route::get('fetch_userdata', 'HomeController@usersData')->middleware(['authenticated','can:isAdmin'])->name('userdata');
 
 
 
-Route::get('fetch_userUpdatedData', 'TodoController@getusersData')->name('todo.getdata');
 
-Route::get('export', 'TodoController@export')->name('export');
-Route::post('/email/already', 'TodoController@Email_already')->name('check_email');
+
 Route::get('Deleted/data/show', 'TodoController@deleteddata')->name('deleted');
-Route::post('Deleted/data/show', 'TodoController@restore')->name('restore');
-Route::post('pDeleted/data/show', 'TodoController@forcedelete')->name('forcedelete');
-Route::post('active/data/show', 'TodoController@activeDactivateUser')->name('activeUser');
-Route::post('dactive/data/show', 'TodoController@activeDactivateUser')->name('dactiveUser');
-Route::post('changepassword/user.xamp', 'HomeController@changepassword')->name('changepassword');
-Route::post('userProfile/changepass', 'HomeController@changeUser_password')->name('pass_change');
-Route::post('userProfile/Image', 'HomeController@profile_Pic')->name('userImage');
-Route::get('userProfile', 'HomeController@profile')->name('profile');
-//http://localhost/laravel/blog/public/fetch_addeddata
-//http://localhost/laravel/blog/public/todo_edit_data/fetch_addeddata
+
+
+Route::get('rowData','TodoController@rowfilter')->name('getRowData');
+Route::get('searchuserData','TodoController@index')->name('searchuserData');
+Route::post('get_image', 'IptcController@get_image')->name('get_image');
+Route::post('get_iptc', 'IptcController@get_iptcdata')->name('get_iptcdata');
+Route::post('edit_iptc', 'IptcController@edit_iptcdata')->name('edit_iptcdata');
+
+Route::get('exifalldata', 'GpsController@index')->name('exifalldata');
+Route::get('add_lat_long', 'GpsController@addGpsInfo')->name('addLatLong');
+Route::post('upload_image', 'GpsController@upload_image')->name('upload_image');
+Route::post('addmetadata', 'GpsController@addGpsInfo')->name('addmetadata');
+Route::post('editmetadata', 'GpsController@editGpsInfo')->name('editmetadata');
+Route::post('get_Exif', 'GpsController@get_exifdata')->name('get_exifdata');
+Route::get('edit_Exif/{id?}', 'GpsController@edit_exifdata')->name('edit_exifdata');
+Route::post('addmeta_tag', 'GpsController@addmetatag')->name('addmetatag');
+
+
+
+Route::get('testconfig','GpsController@testconfig')->name('test');
+Route::get('testlatlong', 'GpsController@get_latlon')->name('get_latlon');

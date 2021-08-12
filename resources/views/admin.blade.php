@@ -60,7 +60,7 @@
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
               </div>
-              <a href="{{route('alldata')}}" class="small-box-footer">See all <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{{route('exifalldata')}}" class="small-box-footer">See all <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->

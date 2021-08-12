@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    MyFirst App||Developed <p style="color: green;text-transform: uppercase;"> By:-Atul kumar ojha</p>
+                    Image Seo Project <p style="color: green;text-transform: uppercase;"> By:-Atul kumar ojha</p>
                 </div>
 
                 <!-- <div class="links">

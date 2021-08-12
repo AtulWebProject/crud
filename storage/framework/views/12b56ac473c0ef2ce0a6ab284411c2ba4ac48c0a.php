@@ -1,0 +1,231 @@
+
+
+<?php $__env->startSection('content'); ?>;
+
+<style type="text/css">
+  .show_data{border:none;}
+  .carddata{display: none;}
+</style>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper"  style="padding: 2px;">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+              <h1 class="m-0">Data</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <!-- <li class="breadcrumb-item"><a href="#">Home</a></li> -->
+              <li class="breadcrumb-item active btn btn-warning" data-toggle="modal" data-target="#Image"><!-- <a class="btn btn-warning" href="<?php echo e(route('showData')); ?>">Add Data</a> -->Add Image
+              </li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      
+       <?php if(Session::has('msg')): ?>
+       <div class="alert alert-success" role="alert">
+        <?php echo session('msg'); ?>
+
+      </div>
+      <?php endif; ?>
+      <div class="container-fluid">
+
+        <form method="get" action="<?php echo e(route('searchuserData')); ?>">
+        <div class="row" style="margin-bottom: 1%;">
+          <div class="col-md-2">
+              <input type="search" name="search" value="<?php echo e($search??null); ?>" class="form-control" placeholder="by name">
+            </div>
+            <div class="col-md-2">
+              <input type="search" name="number" value="<?php echo e($number??null); ?>" class="form-control" placeholder="by number">
+            </div>
+            <div class="col-md-2">
+              <input type="search" name="email" value="<?php echo e($email??null); ?>" class="form-control" placeholder="by email">
+            </div>
+            <div class="col-md-2">
+              <input type="search" name="role" value="<?php echo e($role??null); ?>" class="form-control" placeholder="by role">
+            </div>
+            <div class="col-md-2">
+              <input type="date" name="created_at" value="<?php echo e($created_at??null); ?>" class="form-control" placeholder="by created_at">
+            </div>
+            <div class="col-md-2">
+              <input type="date" name="updated_at" value="<?php echo e($updated_at??null); ?>" class="form-control" placeholder="by updated_at">
+            </div>
+            <div class="col-md-1">
+              <br>
+              <button class="btn btn-dark">Search</button>
+            </div>
+            </form>
+            <div class="col-md-2">
+              
+                <br>
+                <a class="btn btn-warning" href="<?php echo e(route('export')); ?>?search=<?php echo e(request()->get('number')); ?> & email=<?php echo e(request()->get('email')); ?> & role=<?php echo e(request()->get('role')); ?> & created_at=<?php echo e(request()->get('created_at')); ?> & updated_at=<?php echo e(request()->get('updated_at')); ?> & name=<?php echo e(request()->get('search')); ?>">Export Data</a>
+           
+            </div>
+            
+            <div class="col-md-1">
+              <br>
+              <a href="fetch_addeddata"><i class="fas fa-sync" style="margin-left: 1%;"></i></a>
+            </div>
+            </div>
+            <div class="row">
+            <div class="col-md-12">
+              <form id="myForm" method="get" action="<?php echo e(route('getRowData')); ?>">
+              <!-- <?php echo csrf_field(); ?> -->
+              <div class="col-md-2" style="float: right;">
+              <select class="form-select" id="rowfilter" style="width: 100%;" name="rowdataget">
+                <option><?php echo e($rowfilter??null); ?></option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+              </select>
+              </div>
+            </div>
+            </form>
+        </div>
+        <div class="row">
+
+    <table id="example" class="table nowrap" style="background-color: white;">
+      <thead>
+        <tr>
+           <th>S.No</th>
+           <th><?php echo \Kyslik\ColumnSortable\SortableLink::render(array ('Title'));?></th>
+           <th><?php echo \Kyslik\ColumnSortable\SortableLink::render(array ('Image'));?></th>
+           <th><?php echo \Kyslik\ColumnSortable\SortableLink::render(array ('created_at'));?></th>
+           <th>action</th>
+        </tr>
+      </thead>
+    <tbody>
+    <?php $__currentLoopData = $viewdata; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key =>$todo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <tr>
+        
+      <td><?php echo e($no++); ?></td>
+      <td class="viewid" style="display: none;"><?php echo e($todo->id); ?></td>
+           <td><?php echo e($todo->title); ?></td>
+           <td><img src="<?php echo e(asset('user_profile_image')); ?>/<?php echo e($todo->image); ?>" style="height:50px;width:50px"></td>
+           <td><?php echo e($todo->created_at); ?></td>
+           <td>
+            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check("allowUser",$todo)): ?>
+            <i class="fas fa-trash-alt delete" data-toggle="modal" data-target="#delete_specialities_details"></i>
+            <?php endif; ?>
+            <a href="<?php echo e(route('todo_edit',[ base64_encode($todo->id ?? '') ])); ?>"><i class="fas fa-pen"></i></a>
+            <i class="far fa-eye viewdata" data-toggle="modal" data-target="#view_specialities_details"></i>
+           </td>
+
+    </tr>
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+    </tbody>
+    </table>
+    
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+<div class="modal fade" id="Image" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <form method="post" action="<?php echo e(route('addmetadata')); ?>" enctype="multipart/form-data">
+          <?php echo csrf_field(); ?>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+        <!-- <input class="form-control" type="hidden" name="pass_id" id="pass_id"> -->
+        <!-- <input class="form-control" type="hidden" name="pass_id" id="pass_id"> -->
+        <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+        <label for="image">Image</label>
+        <input class="form-control" type="file" name="profile_image" id="imgInp">
+        <?php $__errorArgs = ['conpassword'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+            <p style="color: red"><?php echo e($message); ?></p>
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+          </div>
+          <div class="col-md-12">
+            <img id="blah" src="<?php echo e(asset('img/noimg.png')); ?>" alt="your image" style="height: 100px;width: 100px;"/>
+          </div>
+          <!-- <div id="blah"></div> -->
+          <div class="col-md-12">
+        <label for="title">Title</label>
+        <input class="form-control" type="text" name="title" id="title">
+        <?php $__errorArgs = ['conpassword'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+            <p style="color: red"><?php echo e($message); ?></p>
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+          </div>
+          <div class="col-md-12">
+        <label for="description">Description</label>
+        <textarea class="form-control" type="text" name="description"></textarea> 
+        <?php $__errorArgs = ['conpassword'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+            <p style="color: red"><?php echo e($message); ?></p>
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+          </div>
+          
+        </div>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Yes</button>
+       
+        </form>
+         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+      </div>
+      </div>
+  </div>
+</div>
+
+<!------without submit send data on contriller for rowselect------>
+<script type="text/javascript">
+  imgInp.onchange = evt => {
+  const [file] = imgInp.files
+  if (file) {
+    blah.src = URL.createObjectURL(file)
+  }
+}
+
+// $('#imgInp').change( function(event) {
+//     var tmppath = URL.createObjectURL(event.target.files[0]);
+//     //$("img").fadeIn("fast").attr('src',URL.createObjectURL(event.target.files[0]));
+    
+//     $("#disp_tmp_path").html("Temporary Path(Copy it and try pasting it in browser address bar) <strong>["+tmppath+"]</strong>");
+// });
+</script>
+<?php $__env->stopSection(); ?>
+
+
+<?php echo $__env->make('layouts.header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH F:\xampp\htdocs\seo\resources\views/fetch_addedData.blade.php ENDPATH**/ ?>

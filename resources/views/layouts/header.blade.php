@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="csrf-token" content="{{csrf_token()}}" />
+  <meta name="csrf-token" content="{{ csrf_token() }}" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AdminLTE 3 | Dashboard</title>
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ asset('admin1/plugins/fontawesome-free/css/all.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('font/bootstrap-icons.css') }}">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Tempusdominus Bootstrap 4 -->
@@ -26,6 +27,7 @@
   <!-- summernote -->
   <link rel="stylesheet" href="{{ asset('admin1/plugins/summernote/summernote-bs4.min.css') }}">
   <link rel="stylesheet" href="https://jqueryvalidation.org/files/demo/site-demos.css">
+  @yield('css')
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -203,7 +205,7 @@
           <img src="{{ asset('admin1/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+          <a href="#" class="d-block">Atul</a>
         </div>
       </div>
 
@@ -240,8 +242,9 @@
               </p>
             </a> 
           </li>
+         
           <li class="nav-item">
-            <a href="{{route('alldata')}}" class="nav-link {{request()->routeIs('alldata') ? 'active' : '' }}">
+            <a href="{{route('exifalldata')}}" class="nav-link {{request()->routeIs('exifalldata') ? 'active' : '' }}{{request()->routeIs('edit_exifdata') ? 'active' : '' }}">
               <i class="nav-icon fas fa-th"></i>
               <p class="button">
                 All Data
@@ -249,38 +252,13 @@
               </p>
             </a>
           </li>
-           @if(Auth::user()->user_type == 1)
-          <li class="nav-item">
-            <a href="{{route('userdata')}}" class="nav-link {{request()->routeIs('userdata') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-copy"></i>
-              <p class="button">
-                Users
-                <!-- <i class="fas fa-angle-left right"></i> -->
-                <!-- <span class="badge badge-info right">6</span> -->
-              </p>
-            </a>
-          </li>
-          @endif
-          <li class="nav-item">
-            <a href="{{route('showData')}}" class="nav-link {{request()->routeIs('showData') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-copy"></i>
-              <p class="button">
-                Post
-                <!-- <i class="fas fa-angle-left right"></i> -->
-                <!-- <span class="badge badge-info right">6</span> -->
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{route('profile')}}" class="nav-link {{request()->routeIs('profile') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-user-alt"></i>
-              <p class="button">
-                Profile
-                <!-- <i class="fas fa-angle-left right"></i> -->
-                <!-- <span class="badge badge-info right">6</span> -->
-              </p>
-            </a> 
-          </li>
+          
+         
+           
+         
+          
+         
+          
           <li class="nav-item">
             <a href="{{route('deleted')}}" class="nav-link {{request()->routeIs('deleted') ? 'active' : '' }}">
               <i class="nav-icon fas fa-trash-restore"></i>
@@ -291,6 +269,7 @@
               </p>
             </a> 
           </li>
+         
           <li class="nav-item">
             <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
               <i class="nav-icon fas fa-chart-pie"></i>
@@ -314,7 +293,7 @@
     $(this).addClass('selected');
 });
 </script> -->
-@yield('content');
+@yield('content')
 
   <footer class="main-footer">
     <strong>Copyright &copy; 2021-2025 <a href="https://adminlte.io">Maviator</a>.</strong>
@@ -334,13 +313,6 @@
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
-<!-- jQuery -->
-<script src="{{ asset('admin1/plugins/jquery/jquery.min.js') }}"></script>
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script> -->
-
-<!-- jQuery UI 1.11.4 -->
-<!-- <script src="{{ asset('admin1/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
- --><!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 
 <!-- Bootstrap 4 -->
 <script src="{{ asset('admin1/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -368,15 +340,10 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('admin1/js/demo.js') }}"></script>
-
+<script src="../public/js/bootstrap-tagsinput.js"></script>
+@yield('js')
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 
-<!-- <script type="text/javascript">
-  $('#delete').on('show.bs.model', function(event){
-    var button = $(event.relatedTarget)
-  })
-</script> -->
-<!--  -->
 <script type="text/javascript">
   $(document).ready(function(){
     function fetchdata(search=""){
@@ -394,10 +361,6 @@
     })
   });
 </script>
-<!-- <script type="text/javascript">
-  $(document).on('click','ul li a',function(){
-    $(this).addClass('active')
-  })
-</script> -->
+
 </body>
 </html>
